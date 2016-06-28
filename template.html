@@ -1,0 +1,44 @@
+<ul class="pagination">
+    <li class="first" 
+        ms-class='{disabled: @isDisabled("first", 1)}'>
+        <a ms-attr='{href:@getHref("first"),title:@getTitle("first")}'
+           ms-click='@cbProxy($event,"first")'
+           class="fa fa-angle-double-left"
+           >
+            {{@firstText}}
+        </a>
+    </li>
+    <li class="prev" 
+        ms-class='{disabled: @isDisabled("prev",1, @loop)}'>
+        <a ms-attr='{href:@getHref("prev"),title:@getTitle("prev")}'
+           ms-click='@cbProxy($event,"prev")'
+           >
+            {{@prevText}}
+        </a>
+    </li>
+    <li ms-for='page in @pages' 
+        ms-class='{active: page === @currentPage}' >
+        <a ms-attr='{href:@getHref(page),title:@getTitle(page)}'
+           ms-click='@cbProxy($event,page)'
+           >
+            {{page}}
+        </a>
+    </li>
+    <li class="next" 
+        ms-class='{disabled: @isDisabled("next",@totalPages, @loop)}'>
+        <a ms-attr='{href:@getHref("next"),title: @getTitle("next")}'
+           ms-click='@cbProxy($event,"next")'
+           >
+            {{@nextText}}
+        </a>
+    </li>
+    <li class="last" 
+        ms-class='{disabled: @isDisabled("last",@totalPages)}'>
+        <a ms-attr='{href:@getHref("last"),title: @getTitle("last")}'
+           ms-click='@cbProxy($event,"last")'
+           class="fa fa-angle-double-right"
+           >
+            {{@lastText}}
+        </a>
+    </li>
+</ul>
