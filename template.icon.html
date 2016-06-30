@@ -3,16 +3,16 @@
         ms-class='{disabled: @isDisabled("first", 1)}'>
         <a ms-attr='{href:@getHref("first"),title:@getTitle("first")}'
            ms-click='@cbProxy($event,"first")'
+           class="icon-double-angle-left"
            >
-            {{@firstText}}
         </a>
     </li>
     <li class="prev" 
         ms-class='{disabled: @isDisabled("prev",1, @loop)}'>
         <a ms-attr='{href:@getHref("prev"),title:@getTitle("prev")}'
            ms-click='@cbProxy($event,"prev")'
+           class="icon-angle-left"
            >
-            {{@prevText}}
         </a>
     </li>
     <li ms-for='page in @pages' 
@@ -27,16 +27,16 @@
         ms-class='{disabled: @isDisabled("next",@totalPages, @loop)}'>
         <a ms-attr='{href:@getHref("next"),title: @getTitle("next")}'
            ms-click='@cbProxy($event,"next")'
+           class="icon-angle-right"
            >
-            {{@nextText}}
         </a>
     </li>
     <li class="last" 
         ms-class='{disabled: @isDisabled("last",@totalPages)}'>
         <a ms-attr='{href:@getHref("last"),title: @getTitle("last")}'
            ms-click='@cbProxy($event,"last")'
+           class="icon-double-angle-right"
            >
-            {{@lastText}}
         </a>
     </li>
 </ul>

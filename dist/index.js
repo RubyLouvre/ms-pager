@@ -56,9 +56,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var avalon = __webpack_require__(1)
 	__webpack_require__(2)
-	avalon.define({
-	    $id: 'test'
+	window.vm = avalon.define({
+	    $id: 'test',
+	    config: {
+	        totalPages: 0,
+	        showPages: 2,
+	        currentPage:1,
+	        nextText: '下一页',
+	        prevText: '上一页'
+	    }
 	})
+
+	setTimeout(function(){
+	    window.vm.config = {
+	        totalPages: 2,
+	        showPages: 2
+	    }
+	}, 3000)
 
 	module.exports = avalon //注意这里必须返回avalon,用于webpack output配置
 
@@ -8658,10 +8672,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return //disabled, active不会触发
 	            }
 	            var cur = this.toPage(p)
+	            this.render(cur)
+	            return this.onPageClick(e, p)
+	        },
+	        render: function(cur){
 	            var obj = getPages.call(this, cur)
 	            this.pages = obj.pages
 	            this.currentPage = obj.currentPage
-	            return this.onPageClick(e, p)
 	        },
 	        rpage: /(?:#|\?)page\-(\d+)/,
 	        onInit: function () {
@@ -8673,9 +8690,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    cur = 1
 	                }
 	            }
-	            var obj = getPages.call(this, cur)
-	            this.pages = obj.pages
-	            this.currentPage = obj.currentPage
+	            var that = this
+	            this.$watch('totalPages', function(){
+	                setTimeout(function(){
+	                    that.render(that.currentPage)
+	                },4)
+	            })
+	            this.render(cur)
 	        }
 	    }
 	})
@@ -8721,7 +8742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul class=pagination><li class=first ms-class='{disabled: @isDisabled(\"first\", 1)}'><a ms-attr='{href:@getHref(\"first\"),title:@getTitle(\"first\")}' ms-click='@cbProxy($event,\"first\")' class=\"fa fa-angle-double-left\">{{@firstText}}</a></li><li class=prev ms-class='{disabled: @isDisabled(\"prev\",1, @loop)}'><a ms-attr='{href:@getHref(\"prev\"),title:@getTitle(\"prev\")}' ms-click='@cbProxy($event,\"prev\")'>{{@prevText}}</a></li><li ms-for=\"page in @pages\" ms-class=\"{active: page === @currentPage}\"><a ms-attr={href:@getHref(page),title:@getTitle(page)} ms-click=@cbProxy($event,page)>{{page}}</a></li><li class=next ms-class='{disabled: @isDisabled(\"next\",@totalPages, @loop)}'><a ms-attr='{href:@getHref(\"next\"),title: @getTitle(\"next\")}' ms-click='@cbProxy($event,\"next\")'>{{@nextText}}</a></li><li class=last ms-class='{disabled: @isDisabled(\"last\",@totalPages)}'><a ms-attr='{href:@getHref(\"last\"),title: @getTitle(\"last\")}' ms-click='@cbProxy($event,\"last\")' class=\"fa fa-angle-double-right\">{{@lastText}}</a></li></ul>"
+	module.exports = "<ul class=pagination ms-visible=@totalPages><li class=first ms-class='{disabled: @isDisabled(\"first\", 1)}'><a ms-attr='{href:@getHref(\"first\"),title:@getTitle(\"first\")}' ms-click='@cbProxy($event,\"first\")' class=icon-double-angle-left></a></li><li class=prev ms-class='{disabled: @isDisabled(\"prev\",1, @loop)}'><a ms-attr='{href:@getHref(\"prev\"),title:@getTitle(\"prev\")}' ms-click='@cbProxy($event,\"prev\")' class=icon-angle-left></a></li><li ms-for=\"page in @pages\" ms-class=\"{active: page === @currentPage}\"><a ms-attr={href:@getHref(page),title:@getTitle(page)} ms-click=@cbProxy($event,page)>{{page}}</a></li><li class=next ms-class='{disabled: @isDisabled(\"next\",@totalPages, @loop)}'><a ms-attr='{href:@getHref(\"next\"),title: @getTitle(\"next\")}' ms-click='@cbProxy($event,\"next\")' class=icon-angle-right></a></li><li class=last ms-class='{disabled: @isDisabled(\"last\",@totalPages)}'><a ms-attr='{href:@getHref(\"last\"),title: @getTitle(\"last\")}' ms-click='@cbProxy($event,\"last\")' class=icon-double-angle-right></a></li></ul>"
 
 /***/ }
 /******/ ])

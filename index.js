@@ -2,7 +2,7 @@
 var avalon = require('avalon2')
 require('./style.scss')
 avalon.component('ms-pager', {
-    template: require('./template.html'),
+    template: require('./template.icon.html'),
     defaults: {
         getHref: function (a) {
             return '#page-' + this.toPage(a)
