@@ -46,10 +46,13 @@ avalon.component('ms-pager', {
                 return //disabled, active不会触发
             }
             var cur = this.toPage(p)
+            this.render(cur)
+            return this.onPageClick(e, p)
+        },
+        render: function(cur){
             var obj = getPages.call(this, cur)
             this.pages = obj.pages
             this.currentPage = obj.currentPage
-            return this.onPageClick(e, p)
         },
         rpage: /(?:#|\?)page\-(\d+)/,
         onInit: function () {
@@ -61,9 +64,13 @@ avalon.component('ms-pager', {
                     cur = 1
                 }
             }
-            var obj = getPages.call(this, cur)
-            this.pages = obj.pages
-            this.currentPage = obj.currentPage
+            var that = this
+            this.$watch('totalPages', function(){
+                setTimeout(function(){
+                    that.render(that.currentPage)
+                },4)
+            })
+            this.render(cur)
         }
     }
 })
