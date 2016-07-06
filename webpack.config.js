@@ -54,7 +54,7 @@ module.exports = {
             // https://github.com/b82/webpack-basic-starter/blob/master/webpack.config.js 
             {test: /\.html$/, loader: 'raw!html-minify'},
             {test: /\.scss$/, loader: cssExtractor.extract( 'css!sass')},
-            {test: /\.(ttf|eot|svg|woff2?)((\?|#)[^\'\"]+)?$/, loader: 'url-loader'}
+            {test: /\.(ttf|eot|svg|woff2?)((\?|#)[^\'\"]+)?$/, loader: 'file-loader?name=[name].[ext]'}
 
 
         ]
