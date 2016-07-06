@@ -85,7 +85,7 @@ function getPages(currentPage) {
     // handle boundary case
     if (start <= 0) {
         start = 1;
-        end = s;
+        end = s > total ? total : s;
     }
     if (end > total) {
         start = total - s + 1
