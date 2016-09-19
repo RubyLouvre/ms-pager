@@ -1,6 +1,11 @@
 var webpack = require('webpack');
 
 var path = require('path');
+var fs = require('fs');
+
+fs.readFile('./node_modules/avalon2/dist/avalon.modern.js', function(e, data){
+    fs.writeFile('./dist/avalon.js', data)
+})
 
 function heredoc(fn) {
     return fn.toString().replace(/^[^\/]+\/\*!?\s?/, '').
@@ -48,6 +53,7 @@ module.exports = {
     plugins: [
         new webpack.BannerPlugin('分页 by 司徒正美\n' + api)
     ],
+  //排除不处理的目录
     module: {
         loaders: [
             //http://react-china.org/t/webpack-extracttextplugin-autoprefixer/1922/4
