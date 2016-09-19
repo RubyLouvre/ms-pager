@@ -1,39 +1,38 @@
 {
-    "name": "ms-pager",
-    "version": "1.0.1",
-    "description": "pager",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/RubyLouvre/ms-pager.git"
-    },
-    "keywords": [
-        "avalon2",
-        "pager"
-    ],
-    "dependencies": {
-    },
-    "author": "RubyLouvre",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/RubyLouvre/ms-pager/issues"
-    },
-    "homepage": "https://github.com/RubyLouvre/ms-pager#readme",
-    "devDependencies": {
-        "avalon-promise": "^0.4.0",
-        "avalon2": "~2.1.0",
-        "css-loader": "~0.8.0",
-        "file-loader": "~0.9.0",
-        "html-minify-loader": "~1.1.0",
-        "node-sass": "^3.8.0",
-        "raw-loader": "~0.5.1",
-        "sass-loader": "^3.2.2",
-        "style-loader": "~0.13.1",
-        "url-loader": "0.5.7",
-        "webpack": "^1.13.1",
-        "extract-text-webpack-plugin": "^1.0.1"
-    }
+  "name": "ms-pager",
+  "version": "1.0.2",
+  "description": "pager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubyLouvre/ms-pager.git"
+  },
+  "keywords": [
+    "avalon2",
+    "pager"
+  ],
+  "dependencies": {},
+  "author": "RubyLouvre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RubyLouvre/ms-pager/issues"
+  },
+  "homepage": "https://github.com/RubyLouvre/ms-pager#readme",
+  "devDependencies": {
+    "avalon-promise": "^0.4.0",
+    "avalon2": "~2.1.0",
+    "css-loader": "~0.8.0",
+    "file-loader": "~0.9.0",
+    "html-minify-loader": "~1.1.0",
+    "node-sass": "^3.8.0",
+    "raw-loader": "~0.5.1",
+    "sass-loader": "^3.2.2",
+    "style-loader": "~0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "^1.13.1",
+    "extract-text-webpack-plugin": "^1.0.1"
+  }
 }
