@@ -48,7 +48,7 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         filename: '[name].js',
         libraryTarget: 'umd',
-        library: 'avalon'
+        library: 'ms_pager'
     }, //页面引用的文件
     plugins: [
         new webpack.BannerPlugin('分页 by 司徒正美\n' + api)
