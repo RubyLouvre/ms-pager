@@ -4,6 +4,7 @@
   margin: 20px 0;
   border-radius: 4px; }
   .pagination > li {
+    float: left;
     display: inline; }
     .pagination > li > a,
     .pagination > li > span {
