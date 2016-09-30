@@ -4,33 +4,33 @@ require('./style.scss')
 avalon.component('ms-pager', {
     template: require('./template.icon.html'),
     defaults: {
-        getHref    : function (a) {
+        getHref: function (a) {
             return '#page-' + this.toPage(a)
         },
-        getTitle   : function (title) {
+        getTitle: function (title) {
             return title
         },
-        isDisabled : function (name, page) {
+        isDisabled: function (name, page) {
             return this.$buttons[name] = (this.currentPage === page)
         },
-        $buttons   : {},
-        showPages  : 5,
-        pages      : [],
-        totalPages : 15,
+        $buttons: {},
+        showPages: 5,
+        pages: [],
+        totalPages: 15,
         currentPage: 1,
-        firstText  : 'First',
-        prevText   : 'Previous',
-        nextText   : 'Next',
-        lastText   : 'Last',
+        firstText: 'First',
+        prevText: 'Previous',
+        nextText: 'Next',
+        lastText: 'Last',
         onPageClick: avalon.noop,
-        toPage     : function (p) {
-            var cur = this.currentPage;
-            var max = this.totalPages;
+        toPage: function (p) {
+            var cur = this.currentPage
+            var max = this.totalPages
             switch (p) {
                 case 'first':
                     return 1
                 case 'prev':
-                    return Math.max(cur - 1, 1)
+                    return Math.max(cur - 1, 0)
                 case 'next':
                     return Math.min(cur + 1, max)
                 case 'last':
@@ -39,7 +39,7 @@ avalon.component('ms-pager', {
                     return p
             }
         },
-        
+
         cbProxy: function (e, p) {
             var cur = this.toPage(p);
             this.render(cur);
@@ -49,19 +49,16 @@ avalon.component('ms-pager', {
             }
             return this.onPageClick(e, cur);
         },
-        render : function (cur) {
+        render: function(cur){
             var obj = getPages.call(this, cur)
-            console.log(obj);
-            
-            
             var that = this;
             setTimeout(function () { // 修复
                 that.currentPage = obj.currentPage;
                 that.pages = obj.pages;
             }, 4)
         },
-        rpage  : /(?:#|\?)page\-(\d+)/,
-        onInit : function () {
+        rpage: /(?:#|\?)page\-(\d+)/,
+        onInit: function () {
             var cur = this.currentPage
             var match = this.rpage && location.href.match(this.rpage)
             if (match && match[1]) {
@@ -71,13 +68,12 @@ avalon.component('ms-pager', {
                 }
             }
             var that = this
-            this.$watch('totalPages', function () {
-                setTimeout(function () {
+            this.$watch('totalPages', function(){
+                setTimeout(function(){
                     that.render(that.currentPage)
-                }, 4)
+                },4)
             })
             this.cbProxy(window.event, cur);
-            console.log(cur);
         }
     }
 })
@@ -88,7 +84,7 @@ function getPages(currentPage) {
     var half = Math.floor(s / 2)
     var start = currentPage - half + 1 - s % 2
     var end = currentPage + half
-    
+
     // handle boundary case
     if (start <= 0) {
         start = 1;
@@ -98,13 +94,16 @@ function getPages(currentPage) {
         start = total - s + 1
         end = total
     }
-    
+
     var itPage = start;
     while (itPage <= end) {
         pages.push(itPage)
         itPage++
     }
-    
+
     return {currentPage: currentPage, pages: pages};
 }
+
+
+
 //https://github.com/brantwills/Angular-Paging
