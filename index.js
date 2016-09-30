@@ -30,7 +30,7 @@ avalon.component('ms-pager', {
                 case 'first':
                     return 1
                 case 'prev':
-                    return Math.max(cur - 1, 0)
+                    return Math.max(cur - 1, 1)/*从第一页开始*/
                 case 'next':
                     return Math.min(cur + 1, max)
                 case 'last':
@@ -38,21 +38,24 @@ avalon.component('ms-pager', {
                 default:
                     return p
             }
-        }, 
+        },
 
         cbProxy: function (e, p) {
-            if (this.$buttons[p] || p === this.currentPage) {
+            var cur = this.toPage(p);
+            this.render(cur);
+            if (this.$buttons[p] || p === this.currentPage) { // 调整顺序然页码正常显示
                 e.preventDefault()
                 return //disabled, active不会触发
             }
-            var cur = this.toPage(p)
-            this.render(cur)
-            return this.onPageClick(e, p)
+            return this.onPageClick(e, cur);
         },
         render: function(cur){
             var obj = getPages.call(this, cur)
-            this.pages = obj.pages
-            this.currentPage = obj.currentPage
+            var that = this;
+            setTimeout(function () { // 修复
+                that.currentPage = obj.currentPage;
+                that.pages = obj.pages;
+            }, 4)
         },
         rpage: /(?:#|\?)page\-(\d+)/,
         onInit: function () {
@@ -70,7 +73,7 @@ avalon.component('ms-pager', {
                     that.render(that.currentPage)
                 },4)
             })
-            this.render(cur)
+            this.cbProxy(window.event, cur);
         }
     }
 })
