@@ -30,7 +30,7 @@ avalon.component('ms-pager', {
                 case 'first':
                     return 1
                 case 'prev':
-                    return Math.max(cur - 1, 0)
+                    return Math.max(cur - 1, 1)/*从第一页开始*/
                 case 'next':
                     return Math.min(cur + 1, max)
                 case 'last':
