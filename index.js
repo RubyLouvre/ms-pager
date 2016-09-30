@@ -1,3 +1,4 @@
+
 var avalon = require('avalon2')
 require('./style.scss')
 avalon.component('ms-pager', {
