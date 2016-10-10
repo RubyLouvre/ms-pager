@@ -129,7 +129,6 @@ avalon.component('ms-pager', {
         },
         render : function (cur) {/*更新页码*/
             var obj = getPages.call(this, cur);
-            console.log(cur);
             this.currentPage = obj.currentPage;
             this.pages = obj.pages;
         },
@@ -140,7 +139,6 @@ avalon.component('ms-pager', {
         cur    : function () { /*正确获取匹配页码*/
             var cur = this.currentPage;
             var match = this.rpage && location.href.match(this.rpage());
-            console.log(location.href.match(this.rpage()));
             if (match && match[1]) {
                 var cur = ~~match[1]
                 if (cur < 0 || cur > this.totalPages) {
