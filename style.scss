@@ -52,11 +52,11 @@ $pagination-disabled-border:           #ddd !default;
 
 @mixin border-right-radius($radius) {
   border-bottom-right-radius: $radius;
-     border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
 }
 @mixin border-left-radius($radius) {
   border-bottom-left-radius: $radius;
-     border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
 }
 
 .pagination {
@@ -64,7 +64,7 @@ $pagination-disabled-border:           #ddd !default;
   padding-left: 0;
   margin: $line-height-computed 0;
   border-radius: $border-radius-base;
-
+  
   > li {
     float: left;
     display: inline; // Remove list-style and block-level defaults
@@ -94,7 +94,7 @@ $pagination-disabled-border:           #ddd !default;
       }
     }
   }
-
+  
   > li > a,
   > li > span {
     &:hover,
@@ -105,7 +105,7 @@ $pagination-disabled-border:           #ddd !default;
       border-color: $pagination-hover-border;
     }
   }
-
+  
   > .active > a,
   > .active > span {
     &,
@@ -118,7 +118,7 @@ $pagination-disabled-border:           #ddd !default;
       cursor: default;
     }
   }
-
+  
   > .disabled {
     > span,
     > span:hover,
@@ -133,7 +133,6 @@ $pagination-disabled-border:           #ddd !default;
     }
   }
 }
-
-
-
-
+a{
+  cursor: pointer;
+}

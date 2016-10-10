@@ -41,8 +41,12 @@ function getPages(currentPage) {
 avalon.component('ms-pager', {
     template: require('./template.icon.html'),
     defaults: {
-        /*默认ID*/
         $id        : 'ms-pager',
+        /**
+         * 是否开启低版本兼容模式
+         * 开启，将无法开启浏览器回退功能
+         * */
+        is_ie      : false,
         /**
          * 配置复杂型单页
          * 默认为false
@@ -51,7 +55,8 @@ avalon.component('ms-pager', {
          * 如#/game?page=2
          * 表示单页应用进入子页面game页,当前页为2
          * */
-        is_more    : false,
+        is_more    : true,
+        hash       : '',
         getHref    : function (a) {
             if (this.is_more) {
                 if (location.hash) {
@@ -82,7 +87,7 @@ avalon.component('ms-pager', {
         $buttons   : {},
         showPages  : 5,
         pages      : [],
-        totalPages : 1,
+        totalPages : 100,
         currentPage: 1,
         firstText  : '首页',
         prevText   : '上一页',
@@ -105,38 +110,30 @@ avalon.component('ms-pager', {
                     return p
             }
         },
-        
-        cbProxy: function (e, p) {
-            var that = this;
-            /**
-             * 最关键修复
-             * 延迟页码变更，
-             * 防止当pages改变时，
-             * 导致点击href不一致
-             * */
-            setTimeout(function () {
-                var cur = that.toPage(p);
-                if (that.$buttons[p] || p === that.currentPage) {
-                    if (cur === 1) {
-                        return that.onPageClick(e, cur);
-                    }
-                    e.preventDefault()
-                    return //disabled, active不会触发
+        cbProxy    : function (e, p) {
+            var cur = this.toPage(p);
+            if (this.$buttons[p] || p === this.currentPage) {
+                if (cur === 1) {
+                    return this.onPageClick(e, cur);
                 }
-                that.render(cur);
-                return that.onPageClick(e, cur);
-            }, 4)
+                e.preventDefault()
+                return //disabled, active不会触发
+            }
+            /*替换链接改变hash的形式*/
+            window.location.hash = this.getHref(p);
+            this.render(cur);
+            return this.onPageClick(e, cur);
         },
-        render : function (cur) {/*更新页码*/
+        render     : function (cur) {/*更新页码*/
             var obj = getPages.call(this, cur);
             this.currentPage = obj.currentPage;
             this.pages = obj.pages;
         },
         /*此处供正常单页应用*/
-        rpage  : function () {
+        rpage      : function () {
             return this.is_more ? /(?:#|\?)page\=(\d+)/ : /(?:#|\?)page\-(\d+)/;
         },
-        cur    : function () { /*正确获取匹配页码*/
+        cur        : function () { /*正确获取匹配页码*/
             var cur = this.currentPage;
             var match = this.rpage && location.href.match(this.rpage());
             if (match && match[1]) {
@@ -147,26 +144,47 @@ avalon.component('ms-pager', {
             }
             return cur;
         },
-        onInit : function () {
+        onInit     : function () {
             var that = this;
-            this.$watch('totalPages', function () {
-                /**复杂单页应用，切换选项卡，重置页码
-                 * 但切换选项卡或者数据页数变化时，重置页码
+            /**复杂单页应用，切换选项卡，重置页码
+             * 但切换选项卡或者数据页数变化时，重置页码
+             * */
+            if (that.is_ie) {
+                /**
+                 * 兼容模式
+                 * 但浏览器回退键，视图无法同步
                  * */
-                that.render(that.cur())
-            });
-            this.$watch('currentPage', function () {
-                /**复杂单页应用，切换选项卡，重置页码
-                 * 切换选项卡，从页码1开始
+                this.$watch('totalPages', function () {
+                    that.render(that.cur())
+                });
+                this.$watch('currentPage', function () {
+                    that.render(that.cur());
+                });
+            }
+            else if (!that.is_ie && !that.is_more) {
+                /**
+                 * 完美支持单页一分页组件（仅支持现代浏览器）
+                 * 浏览器回退键功能启动
                  * */
-                that.render(that.cur());
-            });
+                window.addEventListener("hashchange", function () {
+                    that.cbProxy(window.event, that.cur());
+                }, false);
+            }
+            else if (!that.is_ie && that.is_more) {
+                /**
+                 * 支持单页多分页组件（仅支持现代浏览器）
+                 * 此功能适用于单页多分页情景，开启此功能，可配合路由。
+                 * 监听location.hash触发特定的onPageClick
+                 * */
+                window.addEventListener("hashchange", function () {
+                    that.render(that.cur());
+                }, false);
+            }
             /*进入页面预载入页码*/
             that.render(that.cur());
         }
     }
 })
-
 
 
 //https://github.com/brantwills/Angular-Paging
