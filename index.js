@@ -149,19 +149,13 @@ avalon.component('ms-pager', {
             /**复杂单页应用，切换选项卡，重置页码
              * 但切换选项卡或者数据页数变化时，重置页码
              * */
-            if (that.is_ie) {
-                /**
-                 * 兼容模式
-                 * 但浏览器回退键，视图无法同步
-                 * */
-                this.$watch('totalPages', function () {
-                    that.render(that.cur())
-                });
-                this.$watch('currentPage', function () {
-                    that.render(that.cur());
-                });
-            }
-            else if (!that.is_ie && !that.is_more) {
+            this.$watch('totalPages', function () {
+                that.render(that.cur())
+            });
+            this.$watch('currentPage', function () {
+                that.render(that.cur());
+            });
+            if (!that.is_ie && !that.is_more) {
                 /**
                  * 完美支持单页一分页组件（仅支持现代浏览器）
                  * 浏览器回退键功能启动
