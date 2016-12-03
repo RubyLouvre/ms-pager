@@ -15,9 +15,9 @@ avalon2的分页插件
 ```
 使用[兼容性极好的3.2.1](http://fontawesome.io/3.2.1/icons/)
 
-
-
-
+## 配置说明
+* index.js 中**is_ie** 为IE8开启监听，查看location变化，从而支持浏览器后退功能;
+* index.js 中**is_more** 为支持单页应用，具体使用可参考源码片段;
 
 http://caibaojian.com/fontawesome/get-started.html
 http://stackoverflow.com/questions/9809351/ie8-css-font-face-fonts-only-working-for-before-content-on-over-and-sometimes
