@@ -26,7 +26,8 @@ function getPages(currentPage) {
         end = s > total ? total : s;
     }
     if (end > total) {
-        start = total - s + 1
+        start = total - s + 1;
+        if(start<=0) start = 1;
         end = total
     }
     
