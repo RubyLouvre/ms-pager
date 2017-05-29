@@ -46,7 +46,7 @@ avalon.component('ms-pager', {
          * 是否开启低版本兼容模式
          * 开启，将无法开启浏览器回退功能
          * */
-        is_ie      : false,
+        is_ie      : !!window.addEventListener,
         /**
          * 配置复杂型单页
          * 默认为false
@@ -55,7 +55,7 @@ avalon.component('ms-pager', {
          * 如#/game?page=2
          * 表示单页应用进入子页面game页,当前页为2
          * */
-        is_more    : true,
+        is_more    : false,
         hash       : '',
         getHref    : function (a) {
             if (this.is_more) {
